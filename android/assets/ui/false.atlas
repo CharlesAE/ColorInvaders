@@ -1,0 +1,33 @@
+
+false.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+btnFalse
+  rotate: false
+  xy: 1, 1
+  size: 209, 100
+  orig: 209, 100
+  offset: 0, 0
+  index: -1
+btnTrue
+  rotate: false
+  xy: 212, 1
+  size: 209, 100
+  orig: 209, 100
+  offset: 0, 0
+  index: -1
+btnFalse_p
+  rotate: false
+  xy: 423, 1
+  size: 208, 100
+  orig: 208, 100
+  offset: 0, 0
+  index: -1
+btnTrue_p
+  rotate: false
+  xy: 633, 1
+  size: 208, 100
+  orig: 208, 100
+  offset: 0, 0
+  index: -1
