@@ -20,12 +20,7 @@ import com.colorinvaders.Actor.RateIcon;
 import com.colorinvaders.Actor.ShareIcon;
 import com.colorinvaders.Actor.logoActor;
 import com.colorinvaders.MainGame;
-import com.colorinvaders.tween.ActorAccessor;
 import com.colorinvaders.Actor.GameBG;
-
-import aurelienribon.tweenengine.Timeline;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 
@@ -55,7 +50,6 @@ public class MainMenu implements Screen {
     private Skin  skin;
     BitmapFont ButtonFont;
     private TextButton buttonPlay,buttonExit, buttonTutorial, buttonScores;
-    private TweenManager tweenManager;
     GameBG gmbg = new GameBG();
     GameTitle gmTitle = new GameTitle();
     ShareIcon share = new ShareIcon();
@@ -83,8 +77,7 @@ Runnable sharegame = new Runnable() {
         stage.clear();
 
         initTable();
-        initTween();
-        innerMenuSound.play(0.6f);
+        //inner menu sound goes here
         stage.addActor(gmbg);
         stage.addActor(gmTitle);
         stage.addActor(buttonPlay);
@@ -99,9 +92,6 @@ Runnable sharegame = new Runnable() {
 
 	//main menu table
     private void initTable(){
-
-
-
         
 
         //creates play button properties
@@ -122,7 +112,7 @@ Runnable sharegame = new Runnable() {
 	//'play button' listener
         buttonPlay.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                menuSound.play();
+                //menu sound goes here
 
                 return true;
             }
@@ -206,7 +196,6 @@ Runnable sharegame = new Runnable() {
 
     private void update(float delta) {
         stage.act(delta);
-        tweenManager.update(delta);
     }
 
     @Override
