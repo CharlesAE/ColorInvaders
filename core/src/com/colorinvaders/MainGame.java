@@ -36,10 +36,10 @@ public class MainGame extends Game {
 	public TextureAtlas trueFalseAtlas;
 	public BitmapFont buttonFont, wordFont, sigFont, tfFont, scoreFont, menuButtonFont, leaderFont;
 	public int score;
-	//Words used
-	public String[] TextColor = {"RED  ","PURPLE","GREEN","SILVER","ORANGE","BLACK","WHITE","BLUE","PINK"};
-	//colors used
-	public Color[] ColorArray = {Color.RED,new Color(0.50f, 0f, 0.50f, 1), Color.GREEN, new Color(0.60f, 0.60f, 0.60f, 1), new Color(1, 0.69f, 0, 1),new Color(0, 0, 0, 0.85f),Color.WHITE,Color.BLUE,Color.MAGENTA};
+	//A String array is used for words e.g. red, blue, black etc
+	public String[] TextColor = { };
+	//A Color array is used for colors e.g. Color(0f, 0f, 0f, 1) etc
+	public Color[] ColorArray = { };
 	public OrthographicCamera cam;
 	public GameOverScreen gameOverScreen;
 	public Splash splashScreen;
@@ -69,7 +69,7 @@ public class MainGame extends Game {
 		trueFalseAtlas = new TextureAtlas("ui/false.atlas");
 		batch = new SpriteBatch();
 
-	//sounds
+	//sounds initialized
 		innerMenuSound = Gdx.audio.newSound(Gdx.files.internal("sound/menu.ogg"));
 		playMenuSound = Gdx.audio.newSound(Gdx.files.internal("sound/playmenu.ogg"));
 		explodeSound = Gdx.audio.newSound(Gdx.files.internal("sound/explosion.wav"));
@@ -165,6 +165,8 @@ public class MainGame extends Game {
 
 
 	}
+	
+	//Disposing resources
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -195,8 +197,6 @@ public class MainGame extends Game {
 		splashScreen.dispose();
 		Level1Screen.dispose();
 		Level1Screen.hide();
-
-
 	}
 
 	@Override
