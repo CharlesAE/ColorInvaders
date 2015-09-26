@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class Splash implements Screen {
 
     private final MainGame app;
-    private Image splashImg;
+    private Image splash;
     private Stage stage;
     Texture logotexture;
 
@@ -43,15 +43,11 @@ public class Splash implements Screen {
 
         logotexture = new Texture (Gdx.files.internal("img/srs.png"));
 
-        splashImg = new Image(logotexture);
-        splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        splashImg.setPosition((stage.getWidth() / 2) - splashImg.getWidth()/2, stage.getHeight()/2 - splashImg.getHeight()/2);
-        splashImg.addAction(sequence(alpha(0), scaleTo(.25f, .25f),
-                parallel(fadeIn(0.05f),
-                        scaleTo(0.75f, 0.75f, 1.45f)),
-                delay(1f), fadeOut(2.25f,Interpolation.bounceOut), run(transitionRunnable)));
+        splash = new Image(logotexture);
+        splash.setPosition((stage.getWidth() / 2) - splashImg.getWidth()/2, stage.getHeight()/2 - splashImg.getHeight()/2);
+        splash.addAction(parallel(fadeOut(2.25f), run(transitionRunnable)));
 
-        stage.addActor(splashImg);
+        stage.addActor(splash);
 
 
 
