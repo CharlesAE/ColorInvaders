@@ -8,8 +8,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,15 +24,9 @@ import com.colorinvaders.Actor.GameBG;
 import com.colorinvaders.Actor.Ufo;
 import com.colorinvaders.MainGame;
 import com.colorinvaders.State.State;
-import com.colorinvaders.tween.CustomAction;
-import com.colorinvaders.tween.SpriteAccessor;
 
 
 import java.util.Random;
-
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
-import aurelienribon.tweenengine.equations.Back;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
@@ -79,7 +71,6 @@ public class Level1 implements Screen {
     private Ufo ufo;
     float dropSpeed;
     private TextButton btnT, btnF;
-    private TweenManager tweenManager;
     private Label scHead, lvHead;
     public Label texttest;
     private Label.LabelStyle textStyle = new Label.LabelStyle();
@@ -88,19 +79,11 @@ public class Level1 implements Screen {
     State preferences=new State();
 
 
-	Runnable gotoLevel2 = new Runnable() {
-                    @Override
-                    public void run() {
-                        app.setScreen(app.Level2Screen);
-                    }
-                };
-
-
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-
+	//Android's back button press is handled
         Gdx.input.setCatchBackKey(true);
         stage.clear();
         startGame();
@@ -174,10 +157,10 @@ public class Level1 implements Screen {
 	//color is randomly generated	
         id2 = new Random().nextInt(ColorArray.length);
 	
-	//randomly generated index is passed into text array
+	//randomly generated index is used in text array
         myText = TextColor[id1];
         texttest = new Label(myText,textStyle);
-	//randomly generated index is passed into color array
+	//randomly generated index is used in color array
         texttest.setColor(ColorArray[id2]);
 
 	//position is set to middle of screen
@@ -202,7 +185,7 @@ public class Level1 implements Screen {
         texttest.setColor(ColorArray[id2]);
         texttest.setPosition(app.cam.viewportWidth / 2F - texttest.getWidth() / 2, app.cam.viewportHeight - 110);
 
-	//word falls, and check is implemented to see if word falls to bottom of screen
+	//word falls, and a check is implemented to end game if word falls to bottom of screen
         CustomAction wordDrop = new CustomAction(this, 10);
         wordDrop.setPosition(app.cam.viewportWidth / 2F - texttest.getWidth() / 2, 5);
         wordDrop.setDuration(dropSpeed);
@@ -212,31 +195,31 @@ public class Level1 implements Screen {
 
 
 
-	//speed of word increases with score
+	//achievements unlocked at certain scores
         switch(score){
             case 5:
-                dropSpeed -=1.25;
+                
                 break;
             case 10:
                 if (app.actionResolver.isSignedIn()) {
                     app.actionResolver.unlockAchievement("------------------");
                 }
-                dropSpeed -=1;
+                
                 break;
             case 15:
-                dropSpeed -=1;
+                
                 break;
             case 25:
                 if (app.actionResolver.isSignedIn()) {
                     app.actionResolver.unlockAchievement("------------------");
                 }
-                 dropSpeed -=0.85;
+                 
                 break;
             case 30:
-                dropSpeed -=1.25;
+                
                 break;
             case 40:
-                dropSpeed -=0.75;
+                
                 break;
             case 50:
                 if (app.actionResolver.isSignedIn()) {
@@ -252,7 +235,7 @@ public class Level1 implements Screen {
 
     private void update(float delta) {
         stage.act(delta);
-        tweenManager.update(delta);
+        
     }
 
     private void initUfo(){
@@ -268,17 +251,13 @@ public class Level1 implements Screen {
         TextButton.TextButtonStyle buttonFalse = new TextButton.TextButtonStyle();
         buttonFalse.up = trueFalseSkin.getDrawable("btnFalse");
         buttonFalse.down = trueFalseSkin.getDrawable("btnFalse_p");
-        buttonFalse.pressedOffsetX = 2;
-        buttonFalse.pressedOffsetY = -2;
-        buttonFalse.font = app.tfFont;
+        
 
 	//button 'false' properties
         TextButton.TextButtonStyle buttonTrue = new TextButton.TextButtonStyle();
         buttonTrue.up = trueFalseSkin.getDrawable("btnTrue");
         buttonTrue.down = trueFalseSkin.getDrawable("btnTrue_p");
-        buttonTrue.pressedOffsetX = 2;
-        buttonTrue.pressedOffsetY = -2;
-        buttonTrue.font = app.tfFont;
+        
 
 
 	//button 'true' initialization and positioning
@@ -325,8 +304,8 @@ public class Level1 implements Screen {
         if(id1 != id2){
 	//increment score and play accompanying sound
             score++;
-            trueSound.play(0.5f);
-            coinSound.play(0.3f);
+           //score sound would go here
+            
 
 	//generate new word
             setupColor();
@@ -345,8 +324,7 @@ public class Level1 implements Screen {
         btnF.setDisabled(true);
         if(id1 == id2) {
             score ++;
-            trueSound.play(0.5f);
-            coinSound.play(0.3f);
+            //score sound would go here
             setupColor();
         }
         else
@@ -357,7 +335,7 @@ public class Level1 implements Screen {
 
     public void gameOver() {
 
-	//if user logged in to google play, submit score to global leaderboard
+	//if user is logged in to Google Play, submit score to global leaderboard
         if (app.actionResolver.isSignedIn())
         {
             app.actionResolver.submitScore(score);
@@ -365,7 +343,7 @@ public class Level1 implements Screen {
         }
 	//submits score to local leaderboard
         checkAndStoreScore();
-        endSound.play(0.5f);
+        //game over sound would go
         app.setScreen(app.gameOverScreen);
     }
 
@@ -393,9 +371,9 @@ public class Level1 implements Screen {
                     break;
                 }
             }
-
+	
             for(int i=1;i<=5;i++){
-                app.saveManager.saveDataValue("Score"+i, scores[i-1]);
+                //logic to determine score positioning goes here
             }
         }
     }
